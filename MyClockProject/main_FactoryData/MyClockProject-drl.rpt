@@ -1,0 +1,30 @@
+Drill report for MyClockProject.kicad_pcb
+Created on 2026-06-23T18:26:05
+
+Copper Layer Stackup:
+    =============================================================
+    L1 :  F.Cu                      front
+    L2 :  B.Cu                      back
+
+
+Drill file 'MyClockProject-PTH-drl.gbr' contains
+    plated through holes:
+    =============================================================
+    T1  0.600mm  0.0236"  (2 holes)  (with 2 slots)
+    T2  0.800mm  0.0315"  (17 holes)  (with 3 slots)
+    T3  0.820mm  0.0323"  (16 holes))
+    T4  0.900mm  0.0354"  (8 holes))
+    T5  1.000mm  0.0394"  (56 holes))
+    T6  1.600mm  0.0630"  (2 holes))
+
+    Total plated holes count 101
+
+
+Drill file 'MyClockProject-NPTH-drl.gbr' contains
+    unplated through holes:
+    =============================================================
+    T1  2.000mm  0.0787"  (4 holes))
+    T2  2.500mm  0.0984"  (4 holes))
+    T3  3.250mm  0.1280"  (2 holes))
+
+    Total unplated holes count 10

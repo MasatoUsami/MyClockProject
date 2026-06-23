@@ -1,0 +1,11 @@
+'C:\Users\m_m3\OneDrive\デスクトップ\MyClockProject\MyClockProject\switchBox\switchBox-F_Cu.gbr' にプロットしました。
+'C:\Users\m_m3\OneDrive\デスクトップ\MyClockProject\MyClockProject\switchBox\switchBox-B_Cu.gbr' にプロットしました。
+'C:\Users\m_m3\OneDrive\デスクトップ\MyClockProject\MyClockProject\switchBox\switchBox-F_Paste.gbr' にプロットしました。
+'C:\Users\m_m3\OneDrive\デスクトップ\MyClockProject\MyClockProject\switchBox\switchBox-B_Paste.gbr' にプロットしました。
+'C:\Users\m_m3\OneDrive\デスクトップ\MyClockProject\MyClockProject\switchBox\switchBox-F_Silkscreen.gbr' にプロットしました。
+'C:\Users\m_m3\OneDrive\デスクトップ\MyClockProject\MyClockProject\switchBox\switchBox-B_Silkscreen.gbr' にプロットしました。
+'C:\Users\m_m3\OneDrive\デスクトップ\MyClockProject\MyClockProject\switchBox\switchBox-F_Mask.gbr' にプロットしました。
+'C:\Users\m_m3\OneDrive\デスクトップ\MyClockProject\MyClockProject\switchBox\switchBox-B_Mask.gbr' にプロットしました。
+'C:\Users\m_m3\OneDrive\デスクトップ\MyClockProject\MyClockProject\switchBox\switchBox-Edge_Cuts.gbr' にプロットしました。
+ガーバー ジョブ ファイル 'C:\Users\m_m3\OneDrive\デスクトップ\MyClockProject\MyClockProject\switchBox\switchBox-job.gbrjob' を作成しました。
+情報: 完了.
