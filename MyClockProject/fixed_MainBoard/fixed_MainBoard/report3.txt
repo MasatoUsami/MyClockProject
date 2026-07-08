@@ -1,0 +1,3 @@
+部品配置ファイル: 'C:\Users\m_m3\OneDrive\デスクトップ\MyClockProject\MyClockProject\fixed_MainBoard\fixed_MainBoard\fixed_MainBoard_FactoryData\fixed_MainBoard-all.pos'.
+情報: コンポーネントの数: 20.
+情報: 完了.
