@@ -1,3 +1,0 @@
-部品配置ファイル: 'C:\Users\m_m3\OneDrive\デスクトップ\MyClockProject\MyClockProject\switchBox\fixed_FactoryData\switchBox-all.pos'.
-情報: コンポーネントの数: 19.
-情報: 完了.
