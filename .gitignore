@@ -1,0 +1,23 @@
+# VS Code Local History
+.history/
+
+# VS Code settings
+.vscode/
+
+# Windows
+Thumbs.db
+
+# VS Code
+.vscode/
+.history/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.bakclear
