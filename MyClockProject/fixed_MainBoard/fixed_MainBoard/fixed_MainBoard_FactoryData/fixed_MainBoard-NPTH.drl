@@ -1,7 +1,13 @@
 M48
+<<<<<<< HEAD
 ; DRILL file KiCad 10.0.3 date 2026-07-15T12:58:07
 ; FORMAT={-:-/ absolute / metric / decimal}
 ; #@! TF.CreationDate,2026-07-15T12:58:07+09:00
+=======
+; DRILL file KiCad 10.0.3 date 2026-07-04T11:32:38
+; FORMAT={-:-/ absolute / metric / decimal}
+; #@! TF.CreationDate,2026-07-04T11:32:38+09:00
+>>>>>>> 91a6792 (First commit. Clock　Project　全てです。ESP32用コードも含まれています。SwitchBox制御用。MainBoard(Motor駆動用)。RS485通信。MainBoardはモーターテストコードまで。今後ホールセンサーを追加して、通信機能までコードを完成させていく予定です。)
 ; #@! TF.GenerationSoftware,Kicad,Pcbnew,10.0.3
 ; #@! TF.FileFunction,NonPlated,1,2,NPTH
 FMAT,2
@@ -16,10 +22,17 @@ T3C3.200
 G90
 G05
 T1
+<<<<<<< HEAD
 X135.89Y-113.19
 X135.89Y-128.142
 X175.26Y-113.158
 X175.26Y-128.142
+=======
+X135.5Y-113.09
+X135.5Y-128.042
+X175.514Y-113.058
+X175.514Y-128.042
+>>>>>>> 91a6792 (First commit. Clock　Project　全てです。ESP32用コードも含まれています。SwitchBox制御用。MainBoard(Motor駆動用)。RS485通信。MainBoardはモーターテストコードまで。今後ホールセンサーを追加して、通信機能までコードを完成させていく予定です。)
 T2
 X113.03Y-68.58
 X113.03Y-128.27

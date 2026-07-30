@@ -1,0 +1,25 @@
+### Footprint positions - created on 2026-07-03T16:39:38 ###
+### Printed by KiCad version 10.0.3
+## Unit = mm, Angle = deg.
+## Side : All
+# Ref                        Val                            Package                                                           PosX       PosY       Rot  Side
+C1                           .01u                           C_Disc_D10.0mm_W2.5mm_P5.00mm                                 102.8700   -92.7100  180.0000  top
+C2                           470u                           CP_Radial_D10.0mm_P7.50mm                                     103.9477   -82.5500  180.0000  top
+H1                           MountingHole                   MountingHole_3mm                                               88.9000   -80.0100   90.0000  top
+H2                           MountingHole                   MountingHole_3mm                                              207.0100   -80.0100   90.0000  top
+H3                           MountingHole                   MountingHole_3mm                                               88.9000  -151.1300   90.0000  top
+H4                           MountingHole                   MountingHole_3mm                                              207.0100  -151.1300   90.0000  top
+J1                           RJ45                           RJ45_Amphenol_54602-x08_Horizontal                            194.7825   -90.1900  180.0000  top
+J6                           Conn_01x16_Socket              PinSocket_1x16_P2.54mm_Vertical                               109.2200   -87.6300    0.0000  top
+J7                           Conn_01x08_Socket              PinSocket_1x16_P2.54mm_Vertical                               130.8100   -87.6300    0.0000  top
+R1                           120Ω                           R_Axial_DIN0204_L3.6mm_D1.6mm_P1.90mm_Vertical                193.0400  -100.3300    0.0000  top
+RS485toTTL5V_MAX1348_SH-U12                                 d20c897a-e8f7-4042-81bd-1f98a1eacd4c                          147.0300  -108.1100  180.0000  top
+RotaryEncoder                EC12D                          1481b7bd-967a-4c6f-926d-5fc3a8d29f51                          199.3450  -152.3700    0.0000  top
+SW2                          S4_SW_Push                     SW_PUSH-12mm                                                  108.0600  -151.5000   90.0000  top
+SW3                          S3_SW_Push                     SW_PUSH-12mm                                                  123.6100  -151.5000   90.0000  top
+SW4                          S2_SW_Push                     SW_PUSH-12mm                                                  139.1600  -151.5000   90.0000  top
+SW5                          S1_SW_Push                     SW_PUSH-12mm                                                  154.7100  -151.5000   90.0000  top
+SW6                          MODE_SW_Push                   SW_PUSH-12mm                                                  170.2600  -151.5000   90.0000  top
+U1                           USB_C_Receptacle_PowerOnly_6P  USB_C_Receptacle_GCT_USB4125-xx-x-0190_6P_TopMnt_Horizontal   137.7950   -77.7240  180.0000  top
+U4                           OLED_SSD1306_128x32_I2C        Adafruit_SSD1306_I2c                                          152.6000   -81.3640    0.0000  top
+## End

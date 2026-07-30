@@ -1,9 +1,17 @@
+<<<<<<< HEAD
 ### Footprint positions - created on 2026-07-15T12:59:26 ###
+=======
+### Footprint positions - created on 2026-07-04T11:28:48 ###
+>>>>>>> 91a6792 (First commit. Clock　Project　全てです。ESP32用コードも含まれています。SwitchBox制御用。MainBoard(Motor駆動用)。RS485通信。MainBoardはモーターテストコードまで。今後ホールセンサーを追加して、通信機能までコードを完成させていく予定です。)
 ### Printed by KiCad version 10.0.3
 ## Unit = mm, Angle = deg.
 ## Side : All
 # Ref     Val                            Package                                                           PosX       PosY       Rot  Side
+<<<<<<< HEAD
                                          7cf05406-9138-4aab-b4f7-5cfa8fc004b3                          135.8900  -120.6500    0.0000  top
+=======
+                                         7cf05406-9138-4aab-b4f7-5cfa8fc004b3                          180.5300  -130.5500    0.0000  top
+>>>>>>> 91a6792 (First commit. Clock　Project　全てです。ESP32用コードも含まれています。SwitchBox制御用。MainBoard(Motor駆動用)。RS485通信。MainBoardはモーターテストコードまで。今後ホールセンサーを追加して、通信機能までコードを完成させていく予定です。)
 C1        100u                           CP_Radial_D6.3mm_P2.50mm                                      151.1700   -77.4700    0.0000  top
 C2        0.1u                           C_Disc_D4.7mm_W2.5mm_P5.00mm                                  146.0100   -77.4700  180.0000  top
 C3        470u                           CP_Radial_D6.3mm_P2.50mm                                      198.1200   -92.7100  -90.0000  top

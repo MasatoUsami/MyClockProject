@@ -5,7 +5,11 @@
       "Application": "Pcbnew",
       "Version": "10.0.3"
     },
+<<<<<<< HEAD
     "CreationDate": "2026-07-15T12:57:31+09:00"
+=======
+    "CreationDate": "2026-07-04T11:32:24+09:00"
+>>>>>>> 91a6792 (First commit. Clock　Project　全てです。ESP32用コードも含まれています。SwitchBox制御用。MainBoard(Motor駆動用)。RS485通信。MainBoardはモーターテストコードまで。今後ホールセンサーを追加して、通信機能までコードを完成させていく予定です。)
   },
   "GeneralSpecs": {
     "ProjectId": {

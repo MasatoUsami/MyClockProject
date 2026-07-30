@@ -1,0 +1,14 @@
+"ID";"指定子";"フットプリント";"数量";"名称";"供給業者、参考資料";
+1;"";"7cf05406-9138-4aab-b4f7-5cfa8fc004b3";1;"";;;
+2;"C1, C5";"CP_Radial_D6.3mm_P2.50mm";2;"100u";;;
+3;"C2, C4";"C_Disc_D4.7mm_W2.5mm_P5.00mm";2;"0.1u";;;
+4;"C3";"CP_Radial_D6.3mm_P2.50mm";1;"470u";;;
+5;"J1, J2";"PinSocket_1x16_P2.54mm_Vertical";2;"Conn_01x16_Socket_ESP32";;;
+6;"J2";"USB_C_Receptacle_GCT_USB4125-xx-x-0190_6P_TopMnt_Horizontal";1;"USB_C_Receptacle_PowerOnly_6P";;;
+7;"J4";"RJ45_RCH_RC01937";1;"RJ45";;;
+8;"J5";"PinSocket_1x05_P2.54mm_Vertical";1;"Conn_01x05_Socket";;;
+9;"J7";"BarrelJack_Wuerth_6941xx301002";1;"Barrel_Jack";;;
+10;"J8";"PinSocket_1x03_P2.54mm_Vertical";1;"Conn_01x03_Socket";;;
+11;"R1";"R_Axial_DIN0309_L9.0mm_D3.2mm_P2.54mm_Vertical";1;"120Ω";;;
+12;"R2";"R_Axial_DIN0309_L9.0mm_D3.2mm_P2.54mm_Vertical";1;"10K";;;
+13;"U1";"ULN2003A";1;"ULN2003A";;;

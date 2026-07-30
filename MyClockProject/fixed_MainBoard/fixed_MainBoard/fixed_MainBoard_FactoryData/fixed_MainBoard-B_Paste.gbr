@@ -1,12 +1,20 @@
 %TF.GenerationSoftware,KiCad,Pcbnew,10.0.3*%
+<<<<<<< HEAD
 %TF.CreationDate,2026-07-15T12:57:31+09:00*%
+=======
+%TF.CreationDate,2026-07-04T11:32:24+09:00*%
+>>>>>>> 91a6792 (First commit. Clock　Project　全てです。ESP32用コードも含まれています。SwitchBox制御用。MainBoard(Motor駆動用)。RS485通信。MainBoardはモーターテストコードまで。今後ホールセンサーを追加して、通信機能までコードを完成させていく予定です。)
 %TF.ProjectId,fixed_MainBoard,66697865-645f-44d6-9169-6e426f617264,rev?*%
 %TF.SameCoordinates,Original*%
 %TF.FileFunction,Paste,Bot*%
 %TF.FilePolarity,Positive*%
 %FSLAX46Y46*%
 G04 Gerber Fmt 4.6, Leading zero omitted, Abs format (unit mm)*
+<<<<<<< HEAD
 G04 Created by KiCad (PCBNEW 10.0.3) date 2026-07-15 12:57:31*
+=======
+G04 Created by KiCad (PCBNEW 10.0.3) date 2026-07-04 11:32:24*
+>>>>>>> 91a6792 (First commit. Clock　Project　全てです。ESP32用コードも含まれています。SwitchBox制御用。MainBoard(Motor駆動用)。RS485通信。MainBoardはモーターテストコードまで。今後ホールセンサーを追加して、通信機能までコードを完成させていく予定です。)
 %MOMM*%
 %LPD*%
 G01*
