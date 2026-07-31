@@ -17,10 +17,12 @@ void loop()
 {
     DEBUG_PRINTLN("Forward");
 
-    for(int i = 1; i <= 200; i++) {
+    for(int i = 1; i <= 220; i++) {
       motorStepForward();
 
-        DEBUG_PRINTF("Step = %d\n", 1);
+        DEBUG_PRINTF("Step = %d\n", i);
+        
+        delay(20);
     }
 
     
@@ -29,13 +31,8 @@ void loop()
 
     Serial.println("Reverse");
 
-    for(int i = 1; i <= 200; i--) {
-      motorStepReverse();
-
-      DEBUG_PRINTF("Step = %d\n", 1);
-    }
-
-    for(int i = 1; i <= 200; i++) {
+ 
+    for(int i = 1; i <= 220; i++) {
       motorStepReverse();
 
       DEBUG_PRINTF("Step = %3d\n", i);
