@@ -17,7 +17,7 @@ void loop()
 {
     DEBUG_PRINTLN("Forward");
 
-    for(int i = 1; i <= 220; i++) {
+    for(int i = 1; i <= 211; i++) {
       motorStepForward();
 
         DEBUG_PRINTF("Step = %d\n", i);
@@ -32,7 +32,7 @@ void loop()
     Serial.println("Reverse");
 
  
-    for(int i = 1; i <= 220; i++) {
+    for(int i = 1; i <= 211; i++) {
       motorStepReverse();
 
       DEBUG_PRINTF("Step = %3d\n", i);
