@@ -18,4 +18,7 @@ bool sensorRisingEdge();
 // OFFになった瞬間
 bool sensorFallingEdge();
 
+// ホームポジション
+bool sensorHomePosition();
+
 #endif

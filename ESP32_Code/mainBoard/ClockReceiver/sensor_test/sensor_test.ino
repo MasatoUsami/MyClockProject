@@ -25,5 +25,10 @@ void loop()
         DEBUG_PRINTLN("Magnet Leave");
     }
 
+    if(sensorHomePosition())
+    {
+        DEBUG_PRINTLN("Home Position");
+    }
+
 }
 
