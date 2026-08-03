@@ -24,6 +24,3 @@ Thumbs.db
 
 # zip files
 *.zip
-
-# KiCad history
-MyClockProject/fixed_MainBoard/fixed_MainBoard/.history
