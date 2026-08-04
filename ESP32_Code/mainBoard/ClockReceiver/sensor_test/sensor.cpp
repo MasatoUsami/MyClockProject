@@ -21,7 +21,7 @@ const unsigned long debounceTime = 10;   // 10ms
 // 初期化
 void sensorInit()
 {
-    pinMode(SENSOR_PIN, INPUT_PULLUP);
+    pinMode(SENSOR_PIN, INPUT);
 
     currentState = digitalRead(SENSOR_PIN);
     previousState = currentState;

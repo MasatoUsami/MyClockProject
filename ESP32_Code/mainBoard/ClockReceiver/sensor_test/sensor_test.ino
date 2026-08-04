@@ -1,34 +1,37 @@
 #include "config.h"
 #include "sensor.h"
 
-void setup()
-{
+bool homed = false;
 
-    Serial.begin(115200);
+void setup() {
 
-    sensorInit();
+  Serial.begin(115200);
 
+  DEBUG_PRINTLN("");
+  DEBUG_PRINTLN("=======================");
+  DEBUG_PRINTLN(" Sensor Test Ver1.0");
+  DEBUG_PRINTLN("=======================");
+
+  sensorInit();
 }
 
-void loop()
-{
+void loop() {
 
-    sensorUpdate();
+  sensorUpdate();
 
-    if(sensorRisingEdge())
-    {
-        DEBUG_PRINTLN("Magnet Detect");
+  if (sensorRisingEdge()) {
+    DEBUG_PRINTLN("Magnet Detect");
+  }
+
+  if (sensorFallingEdge()) {
+    DEBUG_PRINTLN("Magnet Leave");
+  }
+
+  if (!homed) {
+    if (sensorHomePosition()) {
+      DEBUG_PRINTLN("HOME FOUND");
+      homed = true;
     }
-
-    if(sensorFallingEdge())
-    {
-        DEBUG_PRINTLN("Magnet Leave");
-    }
-
-    if(sensorHomePosition())
-    {
-        DEBUG_PRINTLN("Home Position");
-    }
+  }
 
 }
-
