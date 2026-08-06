@@ -24,3 +24,6 @@ Thumbs.db
 
 # zip files
 *.zip
+
+# KiCad lock files
+*.kicad_pro.lck
