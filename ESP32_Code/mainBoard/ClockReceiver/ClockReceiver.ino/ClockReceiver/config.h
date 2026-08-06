@@ -1,11 +1,13 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#include <Arduino.h>
+
 //==================================================
 // Version
 //==================================================
 
-#define VERSION "Clock Receiver Ver1.0"
+#define VERSION "Clock Receiver Ver0.11"
 
 //==================================================
 // Motor
@@ -22,6 +24,8 @@
 
 #define SENSOR_PIN 34
 
+#define DEBUG_ENABLE 1
+
 //==================================================
 // RS485 (UART2)
 //==================================================
@@ -32,14 +36,29 @@
 #define RS485_BAUD 9600
 
 //==================================================
-// Step Motor
+// Motor
+//==================================================
+// モーター本来の仕様（参考値）
+#define MOTOR_STEPS_PER_REV 200.0f
+
+//==================================================
+// Clock Mechanism
 //==================================================
 
-#define STEPS_PER_REV 200.0f
+// 時計機構の設計値
+#define DESIGN_STEPS_PER_REV 200.0f
 
-#define NORMAL_STEP_PER_SEC (STEPS_PER_REV / 3600.0f)
+// 実機キャリブレーション値
+// 組み立て後の実測値
+// デフォルトのキャリブレーション値
+#define DEFAULT_CLOCK_STEPS_PER_REV 211.0f
 
-// ジャンプ速度（あとで調整）
+// 現在使用する値
+#define CLOCK_STEPS_PER_REV DEFAULT_CLOCK_STEPS_PER_REV
+
+#define NORMAL_STEP_PER_SEC (CLOCK_STEPS_PER_REV / 3600.0f)
+
+// JUMP速度 [step/sec]
 #define JUMP_STEP_PER_SEC 35.0f
 
 //==================================================
@@ -66,5 +85,21 @@
 //==================================================
 
 #define DEBUG_ENABLE 1
+
+#define DEBUG_MOTOR 1
+#define DEBUG_COMM 1
+#define DEBUG_STATE 1
+#define DEBUG_SENSOR 1
+
+#if DEBUG_ENABLE
+#define DEBUG_PRINT(x) Serial.print(x)
+#define DEBUG_PRINTLN(x) Serial.println(x)
+#define DEBUG_PRINTF(...) Serial.printf(__VA_ARGS__)
+#else
+#define DEBUG_PRINT(x)
+#define DEBUG_PRINTLN(x)
+#define DEBUG_PRINTF(...)
+
+#endif
 
 #endif
