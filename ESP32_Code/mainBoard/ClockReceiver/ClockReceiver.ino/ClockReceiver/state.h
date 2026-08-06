@@ -12,4 +12,6 @@ enum SystemState
 void stateInit();
 void stateUpdate();
 
+SystemState getState();
+
 #endif
