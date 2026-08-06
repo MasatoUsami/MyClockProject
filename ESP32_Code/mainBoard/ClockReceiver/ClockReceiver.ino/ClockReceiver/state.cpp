@@ -87,7 +87,6 @@ void stateUpdate()
 
 static bool processHoming()
 {
-    static HomingState homingState = HOME_ESCAPE;
     static unsigned long homingStartTime = 0;
     static unsigned long lastStepTime = 0;
     static bool started = false;
@@ -101,7 +100,7 @@ static bool processHoming()
         lastStepTime = now;
 
         // 既にホームセンサー上なら、先にセンサー外まで抜ける。
-        homingState = sensorDetected() ? HOME_ESCAPE : HOME_SEARCH;
+        homeState = sensorDetected() ? HOME_ESCAPE : HOME_SEARCH;
     }
 
     if (now - homingStartTime >= HOME_TIMEOUT)
@@ -109,17 +108,17 @@ static bool processHoming()
         motorDisable();
         state = STATE_ERROR;
         started = false;
-        homingState = HOME_ESCAPE;
+        homeState = HOME_ESCAPE;
         return false;
     }
 
-    switch (homingState)
+    switch (homeState)
     {
         case HOME_ESCAPE:
         {
             if (!sensorDetected())
             {
-                homingState = HOME_SEARCH;
+                homeState = HOME_SEARCH;
                 lastStepTime = now;
                 break;
             }
@@ -137,7 +136,7 @@ static bool processHoming()
             if (sensorHomePosition())
             {
                 motorDisable();
-                homingState = HOME_DONE;
+                homeState = HOME_DONE;
                 break;
             }
 
@@ -153,7 +152,7 @@ static bool processHoming()
         {
             // 次回 stateInit() 後に再ホーミングできるよう内部状態を戻す。
             started = false;
-            homingState = HOME_ESCAPE;
+            homeState = HOME_ESCAPE;
             return true;
         }
     }
