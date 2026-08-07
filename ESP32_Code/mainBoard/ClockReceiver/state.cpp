@@ -52,6 +52,8 @@ void stateUpdate()
         case STATE_HOMING:
         {
 
+            DEBUG_PRINTLN("HOMING...");
+
             if (processHoming())
             {
                 DEBUG_PRINTLN("HOME COMPLETE");
@@ -116,6 +118,8 @@ static bool processHoming()
     {
         case HOME_ESCAPE:
         {
+             DEBUG_PRINTLN("HOME_ESCAPE");
+             
             if (!sensorDetected())
             {
                 homeState = HOME_SEARCH;
@@ -133,6 +137,8 @@ static bool processHoming()
 
         case HOME_SEARCH:
         {
+            DEBUG_PRINTLN("HOME_SEARCH");
+            
             if (sensorHomePosition())
             {
                 motorDisable();
@@ -150,6 +156,8 @@ static bool processHoming()
 
         case HOME_DONE:
         {
+            DEBUG_PRINTLN("HOME_DONE"); 
+            
             // 次回 stateInit() 後に再ホーミングできるよう内部状態を戻す。
             started = false;
             homeState = HOME_ESCAPE;
