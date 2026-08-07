@@ -1,4 +1,6 @@
 #include "config.h"
+#include "motor.h"
+#include "sensor.h"
 #include "state.h"
 
 void setup()
