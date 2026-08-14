@@ -3,6 +3,7 @@
 #include "sensor.h"
 #include "state.h"
 
+
 void setup()
 {
     Serial.begin(115200);
@@ -14,7 +15,6 @@ void setup()
 
     motorInit();
     sensorInit();
-
     stateInit();
 }
 

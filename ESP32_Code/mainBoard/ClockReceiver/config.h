@@ -78,7 +78,7 @@
 #define HOME_SLOW_SPEED 8.0f
 
 // タイムアウト(ms)
-#define HOME_TIMEOUT 15000
+#define HOME_TIMEOUT 35000
 
 //==================================================
 // Debug
