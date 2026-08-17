@@ -119,10 +119,10 @@ void stateUpdate()
     {
       DEBUG_PRINTLN("HOME COMPLETE");
 
-      clockStart();
+      // clockStart();
+      startJumpForward(12, 10);
 
-      state = STATE_RUN;
-      // startJumpForward(3, 30);
+      // state = STATE_RUN;
     }
 
     break;
@@ -140,6 +140,8 @@ void stateUpdate()
     if (processJump())
     {
       DEBUG_PRINTLN("JUMP COMPLETE");
+
+      clockStart();
 
       state = STATE_RUN;
     }
