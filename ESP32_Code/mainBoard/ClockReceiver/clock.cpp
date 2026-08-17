@@ -16,8 +16,12 @@ static int currentMinute = 0;
 // 現在位置
 //
 // 12:00 = 0 step
-// 12:00 → 12:00 = CLOCK_STEPS_PER_REV
 //
+// 12:00 → 1:00 = CLOCK_STEPS_PER_REV
+//
+// 12:00 → 12:00 = CLOCK_STEPS_PER_12H
+//
+
 static float currentStep = 0.0f;
 
 static unsigned long lastClockStepTime = 0;
@@ -82,7 +86,7 @@ int clockGetMinute() {
 
 int clockGetTotalMinutes() {
   float totalMinutes =
-    currentStep * 720.0f / CLOCK_STEPS_PER_REV;
+    currentStep * 60.0f / CLOCK_STEPS_PER_REV;
 
   int minutes =
     (int)(totalMinutes + 0.5f);
@@ -99,33 +103,6 @@ int clockGetTotalMinutes() {
 
 float clockGetStep() {
   return currentStep;
-}
-
-
-//==================================================
-// Calculate steps to target
-//==================================================
-
-float clockCalculateSteps(int targetHour, int targetMinute) {
-  int currentTotal =
-    currentHour * 60 + currentMinute;
-
-  int targetTotal =
-    targetHour * 60 + targetMinute;
-
-  int diff =
-    targetTotal - currentTotal;
-
-  // 前進のみ。
-  // 目標が現在時刻より前なら12時間後とする。
-  if (diff < 0) {
-    diff += 12 * 60;
-  }
-
-  float stepsPerMinute =
-    CLOCK_STEPS_PER_REV / 720.0f;
-
-  return diff * stepsPerMinute;
 }
 
 
@@ -155,7 +132,7 @@ void clockUpdate() {
   lastClockStepTime = now;
 
   float stepsPerSecond =
-    CLOCK_STEPS_PER_REV / 43200.0f;
+    NORMAL_STEP_PER_SEC;
 
   stepAccumulator +=
     elapsed * stepsPerSecond / 1000.0f;
@@ -172,12 +149,14 @@ void clockUpdate() {
 // Step forward
 //==================================================
 void clockStepForward() {
+  DEBUG_PRINTLN("MOTOR STEP");
+
   motorStepForward();
 
   currentStep += 1.0f;
 
-  if (currentStep >= CLOCK_STEPS_PER_REV) {
-    currentStep -= CLOCK_STEPS_PER_REV;
+  if (currentStep >= CLOCK_STEPS_PER_12H) {
+    currentStep -= CLOCK_STEPS_PER_12H;
   }
 
   // デバッグ出力(確認用)
@@ -219,29 +198,6 @@ static int timeToElapsedMinutes(
 }
 
 
-//=======================================================
-// 現在位置との差
-//=======================================================
-
-float clockCalculateJumpForwardSteps(
-  int targetHour,
-  int targetMinute) {
-  float targetStep =
-    clockGetTargetStep(
-      targetHour,
-      targetMinute);
-
-  float diff =
-    targetStep - currentStep;
-
-  if (diff < 0.0f) {
-    diff += CLOCK_STEPS_PER_REV;
-  }
-
-  return diff;
-}
-
-
 //============================================
 // 目標時刻を時計内部のstepに変換
 //============================================
@@ -254,23 +210,33 @@ float clockGetTargetStep(
       targetHour,
       targetMinute);
 
-  // 12:00を0分として扱う
-  if (targetHour == 12) {
-    elapsedMinutes = targetMinute;
-  } else {
-    elapsedMinutes =
-      (targetHour * 60 + targetMinute)
-      - (12 * 60);
-
-    if (elapsedMinutes < 0) {
-      elapsedMinutes += 720;
-    }
-  }
-
-  return elapsedMinutes * CLOCK_STEPS_PER_REV / 720.0f;
+  return elapsedMinutes * CLOCK_STEPS_PER_REV / 60.0f;
 }
 
 
+//=======================================================
+// Forward JUMPに必要なstep数
+//=======================================================
+
+float clockCalculateJumpForwardSteps(
+  int targetHour,
+  int targetMinute)
+{
+  float targetStep =
+    clockGetTargetStep(
+      targetHour,
+      targetMinute);
+
+  float diff =
+    targetStep - currentStep;
+
+  if (diff < 0.0f)
+  {
+    diff += CLOCK_STEPS_PER_12H;
+  }
+
+  return diff;
+}
 
 
 //========================================================
@@ -288,9 +254,17 @@ float clockCalculateJumpReverseSteps(
     currentStep - targetStep;
 
   if (diff < 0.0f) {
-    diff += CLOCK_STEPS_PER_REV;
+    diff += CLOCK_STEPS_PER_12H;
   }
 
   return diff;
 }
+
+
+
+
+
+
+
+
 

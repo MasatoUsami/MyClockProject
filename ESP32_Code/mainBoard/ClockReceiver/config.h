@@ -53,13 +53,27 @@
 // デフォルトのキャリブレーション値
 #define DEFAULT_CLOCK_STEPS_PER_REV 211.0f
 
+//==================================================
+// Clock Mechanism
+//==================================================
+
+// 分針1回転 = 1時間
+#define CLOCK_STEPS_PER_REV 211.0f
+
+// 12時間で分針12回転
+#define CLOCK_STEPS_PER_12H (CLOCK_STEPS_PER_REV * 12.0f)
+
+// 通常運転速度
+#define NORMAL_STEP_PER_SEC (CLOCK_STEPS_PER_12H / 43200.0f)
+
+
 // 現在使用する値
 #define CLOCK_STEPS_PER_REV DEFAULT_CLOCK_STEPS_PER_REV
 
 #define NORMAL_STEP_PER_SEC (CLOCK_STEPS_PER_REV / 3600.0f)
 
 // JUMP速度 [step/sec]
-#define JUMP_STEP_PER_SEC 35.0f
+#define JUMP_STEP_PER_SEC 10.0f
 
 //==================================================
 // Clock
