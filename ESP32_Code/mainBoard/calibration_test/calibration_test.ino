@@ -9,7 +9,7 @@
 //==================================================
 
 // 1回転あたりの実測基準step
-#define CALIBRATION_STEPS_PER_REV 211
+#define CALIBRATION_STEPS_PER_REV 200
 
 // 測定する回転数
 #define CALIBRATION_REVOLUTIONS 5
@@ -121,12 +121,12 @@ void loop()
     Serial.println();
     Serial.println("==============================");
     Serial.println("Start calibration...");
-    Serial.println("1 revolution = 211 steps");
+    Serial.println("1 revolution = 200 steps");
     Serial.println("Total = 5 revolutions");
     Serial.println("==============================");
 
     //========================================
-    // 211 stepごとに停止
+    // 200 stepごとに停止
     //========================================
 
     for (int revolution = 1;
@@ -138,7 +138,7 @@ void loop()
         Serial.print(revolution);
         Serial.println(" start");
 
-        // 211 step動かす
+        // 200 step動かす
         for (int step = 0;
              step < CALIBRATION_STEPS_PER_REV;
              step++)
@@ -189,11 +189,11 @@ void loop()
     Serial.println("==============================");
 
     Serial.println("Measured positions:");
-    Serial.println("Rev 1 = 211 steps");
-    Serial.println("Rev 2 = 422 steps");
-    Serial.println("Rev 3 = 633 steps");
-    Serial.println("Rev 4 = 844 steps");
-    Serial.println("Rev 5 = 1055 steps");
+    Serial.println("Rev 1 = 200 steps");
+    Serial.println("Rev 2 = 400 steps");
+    Serial.println("Rev 3 = 600 steps");
+    Serial.println("Rev 4 = 800 steps");
+    Serial.println("Rev 5 = 1000 steps");
 
     Serial.println("==============================");
 

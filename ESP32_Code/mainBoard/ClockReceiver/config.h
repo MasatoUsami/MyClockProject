@@ -58,7 +58,7 @@
 //==================================================
 
 // 分針1回転 = 1時間
-#define CLOCK_STEPS_PER_REV 211.0f
+#define CLOCK_STEPS_PER_REV 200.0f
 
 // 12時間で分針12回転
 #define CLOCK_STEPS_PER_12H (CLOCK_STEPS_PER_REV * 12.0f)

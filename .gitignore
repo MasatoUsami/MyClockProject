@@ -27,3 +27,14 @@ Thumbs.db
 
 # KiCad lock files
 *.kicad_pro.lck
+
+# PDF and picture files and folders
+*.pdf
+*.png
+*.jpg   
+*.svg
+Mojiban/
+
+# Vectorworks files and backup files
+*.vwx
+*.lck
