@@ -1,12 +1,7 @@
-#ifndef MOTOR_H
-#define MOTOR_H
+#ifndef COMM_H
+#define COMM_H
 
-void motorInit();
-
-void motorEnable();
-void motorDisable();
-
-void motorStepForward();
-void motorStepReverse();
+void commInit();
+void commUpdate();
 
 #endif

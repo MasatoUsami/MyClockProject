@@ -2,6 +2,7 @@
 #include "motor.h"
 #include "sensor.h"
 #include "state.h"
+#include "comm.h"
 
 
 void setup()
@@ -16,6 +17,7 @@ void setup()
     motorInit();
     sensorInit();
     stateInit();
+    commInit();
 }
 
 
@@ -25,14 +27,8 @@ void loop()
 {
     sensorUpdate();
 
+    commUpdate();
+
     stateUpdate();
 
-    if (getState() == STATE_RUN && !jumpTestRequested)
-    {
-        jumpTestRequested = true;
-
-        DEBUG_PRINTLN("=== JUMP REQUEST TEST ===");
-
-        stateRequestJump(12, 30);
-    }
 }
