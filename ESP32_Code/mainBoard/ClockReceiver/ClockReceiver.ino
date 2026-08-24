@@ -18,8 +18,21 @@ void setup()
     stateInit();
 }
 
+
+static bool jumpTestRequested = false;
+
 void loop()
 {
     sensorUpdate();
+
     stateUpdate();
+
+    if (getState() == STATE_RUN && !jumpTestRequested)
+    {
+        jumpTestRequested = true;
+
+        DEBUG_PRINTLN("=== JUMP REQUEST TEST ===");
+
+        stateRequestJump(12, 30);
+    }
 }

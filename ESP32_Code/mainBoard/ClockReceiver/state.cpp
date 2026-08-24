@@ -23,7 +23,6 @@ enum HomingState
 
 static HomingState homeState = HOME_ESCAPE;
 
-
 //==================================================
 // Jump State
 //==================================================
@@ -34,7 +33,6 @@ static float jumpRemainingStep = 0.0f;
 static unsigned long jumpLastStepTime = 0;
 
 static bool jumpStarted = false;
-
 
 //==================================================
 // Function Prototypes
@@ -47,6 +45,9 @@ static void startJumpForward(
     int targetHour,
     int targetMinute);
 
+void stateRequestJump(
+    int targetHour,
+    int targetMinute);
 
 // Initialize the state machine
 void stateInit()
@@ -119,10 +120,7 @@ void stateUpdate()
     {
       DEBUG_PRINTLN("HOME COMPLETE");
 
-      // clockStart();
-      startJumpForward(12, 10);
-
-      // state = STATE_RUN;
+      state = STATE_RUN;
     }
 
     break;
@@ -304,4 +302,9 @@ static void startJumpForward(int targetHour, int targetMinute)
   DEBUG_PRINTLN(jumpRemainingStep);
 
   state = STATE_JUMP;
+}
+
+void stateRequestJump(int targetHour, int targetMinute)
+{
+  startJumpForward(targetHour, targetMinute);
 }
