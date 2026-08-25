@@ -5,30 +5,25 @@
 #include "comm.h"
 
 
-void setup()
-{
-    Serial.begin(115200);
+void setup() {
+  Serial.begin(115200);
 
-    Serial.println();
-    Serial.println("==========================");
-    Serial.println(VERSION);
-    Serial.println("==========================");
+  Serial.println();
+  Serial.println("==========================");
+  Serial.println(VERSION);
+  Serial.println("==========================");
 
-    motorInit();
-    sensorInit();
-    stateInit();
-    commInit();
+  motorInit();
+  sensorInit();
+  stateInit();
+  commInit();
 }
 
 
-static bool jumpTestRequested = false;
+void loop() {
+  sensorUpdate();
 
-void loop()
-{
-    sensorUpdate();
+  commUpdate();
 
-    commUpdate();
-
-    stateUpdate();
-
+  stateUpdate();
 }

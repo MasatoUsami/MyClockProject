@@ -29,16 +29,28 @@ void commInit()
 void commUpdate()
 {
     // DEBUG_PRINTLN("COMM UPDATE");
-    
+
     if (!RS485.available())
         return;
 
+    DEBUG_PRINTLN("===== RS485 DATA RECEIVED =====");
+
+    int count = RS485.available();
+
+    DEBUG_PRINT("Available bytes = ");
+    DEBUG_PRINTLN(count);
+
     String s = RS485.readStringUntil('\n');
+
+    DEBUG_PRINT("RAW DATA = [");
+    DEBUG_PRINT(s);
+    DEBUG_PRINTLN("]");
 
     s.trim();
 
     DEBUG_PRINT("RS485 RX: ");
     DEBUG_PRINTLN(s);
+    DEBUG_PRINTLN("]");
 
     int hour;
     int minute;
@@ -50,6 +62,9 @@ void commUpdate()
         &hour,
         &minute,
         &direction);
+
+    DEBUG_PRINT("sscanf result = ");
+    DEBUG_PRINTLN(result);
 
     if (result != 3)
     {
@@ -74,7 +89,7 @@ void commUpdate()
     {
         stateRequestJump(hour, minute);
     }
-    else 
+    else
     {
         DEBUG_PRINTLN("Reverse JUMP: not supported");
     }

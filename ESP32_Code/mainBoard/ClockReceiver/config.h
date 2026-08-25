@@ -7,7 +7,7 @@
 // Version
 //==================================================
 
-#define VERSION "Clock Receiver Ver0.11"
+#define VERSION "Clock Receiver TEST RS485 2024-06-25"
 
 //==================================================
 // Motor
