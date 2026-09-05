@@ -38,3 +38,7 @@ Mojiban/
 # Vectorworks files and backup files
 *.vwx
 *.lck
+*.step
+
+# Lazer cutter files
+*.scpj
