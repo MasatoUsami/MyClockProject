@@ -61,7 +61,7 @@
 #define NORMAL_STEP_PER_SEC (CLOCK_STEPS_PER_REV / 3600.0f)
 
 // JUMP速度 [step/sec]
-#define JUMP_STEP_PER_SEC 7.0f
+#define JUMP_STEP_PER_SEC 10.0f
 
 
 //==================================================

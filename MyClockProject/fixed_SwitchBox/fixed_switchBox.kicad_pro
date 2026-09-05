@@ -531,7 +531,7 @@
       "plot": "fixed_FactoryData/",
       "pos_files": "",
       "specctra_dsn": "",
-      "step": "",
+      "step": "fixed_switchBox.step",
       "svg": "",
       "vrml": ""
     },

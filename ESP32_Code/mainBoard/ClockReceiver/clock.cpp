@@ -89,7 +89,7 @@ int clockGetTotalMinutes() {
     currentStep * 60.0f / CLOCK_STEPS_PER_REV;
 
   int minutes =
-    (int)(totalMinutes + 0.5f);
+    (int)totalMinutes;
 
   minutes %= 720;
 
@@ -259,12 +259,4 @@ float clockCalculateJumpReverseSteps(
 
   return diff;
 }
-
-
-
-
-
-
-
-
 
