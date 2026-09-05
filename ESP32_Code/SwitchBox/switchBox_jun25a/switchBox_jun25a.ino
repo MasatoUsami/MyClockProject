@@ -164,7 +164,7 @@ void setup() {
   pinMode(BTN_S4, INPUT_PULLUP);
 
   Serial.begin(115200);
-  mySerial.begin(9600, SERIAL_8N1, 16, 17);
+  mySerial.begin(9600, SERIAL_8N1, 16, 17); 
 
   Wire.begin(21,22);
 
@@ -244,5 +244,17 @@ void loop() {
     }
   }
 
+    // ===== UART受信 =====
+  if (mySerial.available()) {
+
+    String s = mySerial.readStringUntil('\n');
+    s.trim();
+
+    Serial.print("RS485 RX: ");
+    Serial.println(s);
+  }
+
+
   drawUI();
+
 }

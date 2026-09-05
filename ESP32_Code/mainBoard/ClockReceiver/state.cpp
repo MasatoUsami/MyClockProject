@@ -4,6 +4,7 @@
 #include "motor.h"
 #include "sensor.h"
 #include "clock.h"
+#include "comm.h"
 
 //==================================================
 // System State
@@ -130,6 +131,8 @@ void stateUpdate() {
       {
         if (processJump()) {
           DEBUG_PRINTLN("JUMP COMPLETE");
+
+          commSendAckDone();
 
           clockStart();
 

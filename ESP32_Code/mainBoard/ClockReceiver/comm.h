@@ -4,4 +4,6 @@
 void commInit();
 void commUpdate();
 
+void commSendAckDone();
+
 #endif

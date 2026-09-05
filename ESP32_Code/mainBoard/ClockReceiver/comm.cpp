@@ -85,11 +85,23 @@ void commUpdate()
     //==================================================
 
     if (direction == 0 || direction == 1) {
+
+        RS485.println("ACK,START");
+
         stateRequestJump(hour, minute, direction);
     }
     else
     {
         DEBUG_PRINTLN("Invalid direction");
-    }   
-    
+    }       
+}
+
+
+//==================================================
+// Send ACK: JUMP DONE
+//==================================================
+
+void commSendAckDone()
+{
+    RS485.println("ACK,DONE");
 }
