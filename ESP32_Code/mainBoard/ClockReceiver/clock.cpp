@@ -178,6 +178,40 @@ void clockStepForward() {
 }
 
 
+//==================================================
+// Step Revere
+//==================================================
+
+void clockStepReverse() {
+  DEBUG_PRINTLN("MOTOR STEP REVERSE");
+
+  motorStepReverse();
+
+  currentStep -= 1.0f;
+
+  if (currentStep < 0.0f) {
+    currentStep += CLOCK_STEPS_PER_12H;
+  }
+
+  // デバッグ出力(確認用)
+  DEBUG_PRINT("Clock Step = ");
+  DEBUG_PRINTLN(currentStep);
+
+  DEBUG_PRINT("Clock Time = ");
+
+  int hour = clockGetHour();
+  int minute = clockGetMinute();
+
+  DEBUG_PRINT(hour);
+  DEBUG_PRINT(":");
+
+  if (minute < 10)
+    DEBUG_PRINT("0");
+
+  DEBUG_PRINTLN(minute);
+}
+
+
 //=============================================================
 // １２時からの分数
 //=============================================================

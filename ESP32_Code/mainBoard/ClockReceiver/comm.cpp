@@ -50,7 +50,6 @@ void commUpdate()
 
     DEBUG_PRINT("RS485 RX: ");
     DEBUG_PRINTLN(s);
-    DEBUG_PRINTLN("]");
 
     int hour;
     int minute;
@@ -85,12 +84,12 @@ void commUpdate()
     // Forward JUMP only
     //==================================================
 
-    if (direction == 0)
-    {
-        stateRequestJump(hour, minute);
+    if (direction == 0 || direction == 1) {
+        stateRequestJump(hour, minute, direction);
     }
     else
     {
-        DEBUG_PRINTLN("Reverse JUMP: not supported");
-    }
+        DEBUG_PRINTLN("Invalid direction");
+    }   
+    
 }

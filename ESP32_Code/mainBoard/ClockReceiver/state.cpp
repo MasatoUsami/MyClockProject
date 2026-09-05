@@ -32,6 +32,7 @@ static float jumpRemainingStep = 0.0f;
 static unsigned long jumpLastStepTime = 0;
 
 static bool jumpStarted = false;
+static bool jumpReverse = false;
 
 //==================================================
 // Function Prototypes
@@ -245,7 +246,14 @@ static bool processJump() {
   }
 
   if (now - jumpLastStepTime >= stepInterval) {
-    clockStepForward();
+
+    if (jumpReverse) {
+      // 逆方向のJUMP動作
+      clockStepReverse();
+    } else {
+      // 正方向のJUMP動作
+      clockStepForward();
+    }
 
     jumpRemainingStep -= 1.0f;
 
@@ -272,6 +280,7 @@ static void startJumpForward(int targetHour, int targetMinute) {
   jumpLastStepTime = millis();
 
   jumpStarted = true;
+  jumpReverse = false;
 
   DEBUG_PRINTLN("JUMP START");
 
@@ -284,7 +293,32 @@ static void startJumpForward(int targetHour, int targetMinute) {
   state = STATE_JUMP;
 }
 
-void stateRequestJump(int targetHour, int targetMinute) {
+static void startJumpReverse(int targetHour, int targetMinute) {
+
+  Serial.println("******** START JUMP REVERSE ********");
+
+  jumpTargetStep =
+      clockGetTargetStep(targetHour, targetMinute);
+
+  jumpRemainingStep =
+      clockCalculateJumpReverseSteps(targetHour, targetMinute);
+
+  jumpLastStepTime = millis();
+  jumpStarted = true;
+  jumpReverse = true;
+
+  DEBUG_PRINTLN("JUMP REVERSE START");
+
+  DEBUG_PRINT("Target Step = ");
+  DEBUG_PRINTLN(jumpTargetStep);
+
+  DEBUG_PRINT("Remaining Step = ");
+  DEBUG_PRINTLN(jumpRemainingStep);
+
+  state = STATE_JUMP;
+}
+
+void stateRequestJump(int targetHour, int targetMinute, int direction) {
   Serial.println("******** STATE REQUEST JUMP ********");
 
   DEBUG_PRINTLN("=== STATE REQUEST JUMP ===");
@@ -295,5 +329,13 @@ void stateRequestJump(int targetHour, int targetMinute) {
   DEBUG_PRINT("Target Minute = ");
   DEBUG_PRINTLN(targetMinute);
 
-  startJumpForward(targetHour, targetMinute);
+  DEBUG_PRINT("Direction = ");
+  DEBUG_PRINTLN(direction);
+
+  if (direction == 0) {
+    startJumpForward(targetHour, targetMinute);
+  } else {
+    startJumpReverse(targetHour, targetMinute); 
+  }
+  
 }

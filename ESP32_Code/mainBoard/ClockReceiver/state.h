@@ -15,5 +15,5 @@ void stateUpdate();
 
 SystemState getState();
 
-void stateRequestJump(int targetHour, int targetMinute);
+void stateRequestJump(int targetHour, int targetMinute, int direction);
 #endif
