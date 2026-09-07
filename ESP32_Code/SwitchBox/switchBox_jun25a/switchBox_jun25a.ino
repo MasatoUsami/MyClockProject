@@ -60,6 +60,18 @@ enum Mode {
 
 Mode mode = RUN;
 
+
+// ===== Receiver状態 =====
+
+enum ReceiverStatus {
+  RECEIVER_RUN,
+  RECEIVER_JUMP,
+  RECEIVER_ERROR
+};
+
+ReceiverStatus receiverStatus = RECEIVER_RUN;
+
+
 // ===== シーン =====
 struct Scene {
   int hour;
@@ -119,30 +131,36 @@ void drawUI() {
   display.setTextColor(SSD1306_WHITE);
 
   if (mode == RUN) {
-    display.setCursor(0,0);
-    display.println("RUN");
+    display.setCursor(0, 0);
+    
+    if (receiverStatus == RECEIVER_JUMP) {
+        display.println("JUMP");
+    }
+    else {
+        display.println("RUN");
+    }
 
     for (int i = 0; i < 4; i++) {
       display.setCursor(0, 10 + i * 12);
       display.printf("S%d %02d:%02d %s",
-        i+1,
-        scenes[i].hour,
-        scenes[i].minute,
-        scenes[i].reverse ? "<-" : "->");
+                     i + 1,
+                     scenes[i].hour,
+                     scenes[i].minute,
+                     scenes[i].reverse ? "<-" : "->");
     }
   }
 
   else {
-    display.setCursor(0,0);
+    display.setCursor(0, 0);
     display.printf("SET S%d", selectedScene + 1);
 
-    display.setCursor(0,20);
+    display.setCursor(0, 20);
     display.printf("H:%02d", editHour);
 
-    display.setCursor(0,35);
+    display.setCursor(0, 35);
     display.printf("M:%02d", editMinute);
 
-    display.setCursor(0,50);
+    display.setCursor(0, 50);
     display.printf("DIR:%s", editReverse ? "<-" : "->");
   }
 
@@ -164,17 +182,17 @@ void setup() {
   pinMode(BTN_S4, INPUT_PULLUP);
 
   Serial.begin(115200);
-  mySerial.begin(9600, SERIAL_8N1, 16, 17); 
+  mySerial.begin(9600, SERIAL_8N1, 16, 17);
 
-  Wire.begin(21,22);
+  Wire.begin(21, 22);
 
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
 
   display.clearDisplay();
 
   // 初期値
-  for(int i=0;i<4;i++){
-    scenes[i] = {0,0,false};
+  for (int i = 0; i < 4; i++) {
+    scenes[i] = { 0, 0, false };
   }
 }
 
@@ -239,12 +257,12 @@ void loop() {
     if (enc != 0) editReverse = !editReverse;
 
     if (btnPressed(ENC_SW)) {
-      scenes[selectedScene] = {editHour, editMinute, editReverse};
+      scenes[selectedScene] = { editHour, editMinute, editReverse };
       mode = RUN;
     }
   }
 
-    // ===== UART受信 =====
+  // ===== UART受信 =====
   if (mySerial.available()) {
 
     String s = mySerial.readStringUntil('\n');
@@ -252,9 +270,15 @@ void loop() {
 
     Serial.print("RS485 RX: ");
     Serial.println(s);
+
+    if (s == "ACK,START") {
+      receiverStatus = RECEIVER_JUMP;
+      Serial.println("Receiver Status = JUMP");
+    } else if (s == "ACK,DONE") {
+      receiverStatus = RECEIVER_RUN;
+      Serial.println("Receiver Status = RUN");
+    }
   }
 
-
   drawUI();
-
 }
