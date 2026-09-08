@@ -50,7 +50,8 @@ HardwareSerial mySerial(2);
 #define BTN_S4 13
 
 // ===== モード =====
-enum Mode {
+enum Mode
+{
   RUN,
   SELECT_SCENE,
   EDIT_HOUR,
@@ -60,10 +61,10 @@ enum Mode {
 
 Mode mode = RUN;
 
-
 // ===== Receiver状態 =====
 
-enum ReceiverStatus {
+enum ReceiverStatus
+{
   RECEIVER_RUN,
   RECEIVER_JUMP,
   RECEIVER_ERROR
@@ -71,15 +72,18 @@ enum ReceiverStatus {
 
 ReceiverStatus receiverStatus = RECEIVER_RUN;
 
-
 // ===== シーン =====
-struct Scene {
+struct Scene
+{
   int hour;
   int minute;
   bool reverse;
 };
 
 Scene scenes[4];
+
+// ===== 実行中Scene =====
+int activeScene = -1;
 
 // ===== 状態 =====
 int selectedScene = 0;
@@ -92,8 +96,10 @@ int lastA = HIGH;
 
 // ===== デバウンス =====
 unsigned long lastBtnTime = 0;
-bool btnPressed(int pin) {
-  if (digitalRead(pin) == LOW && millis() - lastBtnTime > 200) {
+bool btnPressed(int pin)
+{
+  if (digitalRead(pin) == LOW && millis() - lastBtnTime > 200)
+  {
     lastBtnTime = millis();
     return true;
   }
@@ -101,15 +107,19 @@ bool btnPressed(int pin) {
 }
 
 // ===== エンコーダー処理 =====
-int readEncoder() {
+int readEncoder()
+{
   int a = digitalRead(ENC_A);
   int b = digitalRead(ENC_B);
 
   int val = 0;
 
-  if (a != lastA) {
-    if (b != a) val = 1;
-    else val = -1;
+  if (a != lastA)
+  {
+    if (b != a)
+      val = 1;
+    else
+      val = -1;
   }
 
   lastA = a;
@@ -117,40 +127,90 @@ int readEncoder() {
 }
 
 // ===== UART送信 =====
-void sendScene(int i) {
+void sendScene(int i)
+{
   char buf[16];
   sprintf(buf, "%d,%d,%d\n", scenes[i].hour, scenes[i].minute, scenes[i].reverse);
   mySerial.print(buf);
 }
 
 // ===== 描画 =====
-void drawUI() {
+void drawUI()
+{
 
   display.clearDisplay();
-  display.setTextSize(1);
+
   display.setTextColor(SSD1306_WHITE);
 
-  if (mode == RUN) {
-    display.setCursor(0, 0);
-    
-    if (receiverStatus == RECEIVER_JUMP) {
-        display.println("JUMP");
-    }
-    else {
-        display.println("RUN");
+  // ==================================================
+  // RUNモード
+  // ==================================================
+
+  if (mode == RUN)
+  {
+
+    // ===== JUMP中 =====
+    if (receiverStatus == RECEIVER_JUMP)
+    {
+
+      display.setTextSize(2);
+
+      display.setCursor(0, 0);
+      display.printf("JUMP S%d", activeScene + 1);
+
+      display.setTextSize(3);
+
+      display.setCursor(20, 20);
+      display.printf("%02d:%02d",
+                     scenes[activeScene].hour,
+                     scenes[activeScene].minute);
+
+      display.setTextSize(2);
+
+      display.setCursor(50, 48);
+
+      if (scenes[activeScene].reverse)
+      {
+        display.print("<-");
+      }
+      else
+      {
+        display.print("->");
+      }
     }
 
-    for (int i = 0; i < 4; i++) {
-      display.setCursor(0, 10 + i * 12);
-      display.printf("S%d %02d:%02d %s",
-                     i + 1,
-                     scenes[i].hour,
-                     scenes[i].minute,
-                     scenes[i].reverse ? "<-" : "->");
+    // ===== 通常RUN =====
+    else
+    {
+
+      display.setTextSize(1);
+
+      display.setCursor(0, 0);
+      display.println("RUN");
+
+      for (int i = 0; i < 4; i++)
+      {
+
+        display.setCursor(0, 10 + i * 12);
+
+        display.printf("S%d %02d:%02d %s",
+                       i + 1,
+                       scenes[i].hour,
+                       scenes[i].minute,
+                       scenes[i].reverse ? "<-" : "->");
+      }
     }
   }
 
-  else {
+  // ==================================================
+  // シーン設定モード
+  // ==================================================
+
+  else
+  {
+
+    display.setTextSize(1);
+
     display.setCursor(0, 0);
     display.printf("SET S%d", selectedScene + 1);
 
@@ -161,14 +221,16 @@ void drawUI() {
     display.printf("M:%02d", editMinute);
 
     display.setCursor(0, 50);
-    display.printf("DIR:%s", editReverse ? "<-" : "->");
+    display.printf("DIR:%s",
+                   editReverse ? "<-" : "->");
   }
 
   display.display();
 }
 
 // ===== セットアップ =====
-void setup() {
+void setup()
+{
 
   pinMode(ENC_A, INPUT_PULLUP);
   pinMode(ENC_B, INPUT_PULLUP);
@@ -191,39 +253,63 @@ void setup() {
   display.clearDisplay();
 
   // 初期値
-  for (int i = 0; i < 4; i++) {
-    scenes[i] = { 0, 0, false };
+  for (int i = 0; i < 4; i++)
+  {
+    scenes[i] = {0, 0, false};
   }
 }
 
 // ===== ループ =====
-void loop() {
+void loop()
+{
 
   int enc = readEncoder();
 
   // ===== MODE =====
-  if (btnPressed(BTN_MODE)) {
+  if (btnPressed(BTN_MODE))
+  {
     mode = SELECT_SCENE;
     selectedScene = 0;
   }
 
   // ===== RUNモード =====
-  if (mode == RUN) {
+  if (mode == RUN)
+  {
 
-    if (btnPressed(BTN_S1)) sendScene(0);
-    if (btnPressed(BTN_S2)) sendScene(1);
-    if (btnPressed(BTN_S3)) sendScene(2);
-    if (btnPressed(BTN_S4)) sendScene(3);
+    if (btnPressed(BTN_S1))
+    {
+      activeScene = 0;
+      sendScene(0);
+    }
+    if (btnPressed(BTN_S2))
+    {
+      activeScene = 1;
+      sendScene(1);
+    }
+    if (btnPressed(BTN_S3))
+    {
+      activeScene = 2;
+      sendScene(2);
+    }
+    if (btnPressed(BTN_S4))
+    {
+      activeScene = 3;
+      sendScene(3);
+    }
   }
 
   // ===== シーン選択 =====
-  if (mode == SELECT_SCENE) {
+  if (mode == SELECT_SCENE)
+  {
 
     selectedScene += enc;
-    if (selectedScene < 0) selectedScene = 3;
-    if (selectedScene > 3) selectedScene = 0;
+    if (selectedScene < 0)
+      selectedScene = 3;
+    if (selectedScene > 3)
+      selectedScene = 0;
 
-    if (btnPressed(ENC_SW)) {
+    if (btnPressed(ENC_SW))
+    {
       editHour = scenes[selectedScene].hour;
       editMinute = scenes[selectedScene].minute;
       editReverse = scenes[selectedScene].reverse;
@@ -232,38 +318,50 @@ void loop() {
   }
 
   // ===== 時設定 =====
-  else if (mode == EDIT_HOUR) {
+  else if (mode == EDIT_HOUR)
+  {
 
     editHour += enc;
-    if (editHour < 0) editHour = 11;
-    if (editHour > 11) editHour = 0;
+    if (editHour < 0)
+      editHour = 11;
+    if (editHour > 11)
+      editHour = 0;
 
-    if (btnPressed(ENC_SW)) mode = EDIT_MINUTE;
+    if (btnPressed(ENC_SW))
+      mode = EDIT_MINUTE;
   }
 
   // ===== 分設定 =====
-  else if (mode == EDIT_MINUTE) {
+  else if (mode == EDIT_MINUTE)
+  {
 
     editMinute += enc * 5;
-    if (editMinute < 0) editMinute = 55;
-    if (editMinute > 55) editMinute = 0;
+    if (editMinute < 0)
+      editMinute = 55;
+    if (editMinute > 55)
+      editMinute = 0;
 
-    if (btnPressed(ENC_SW)) mode = EDIT_DIR;
+    if (btnPressed(ENC_SW))
+      mode = EDIT_DIR;
   }
 
   // ===== 方向 =====
-  else if (mode == EDIT_DIR) {
+  else if (mode == EDIT_DIR)
+  {
 
-    if (enc != 0) editReverse = !editReverse;
+    if (enc != 0)
+      editReverse = !editReverse;
 
-    if (btnPressed(ENC_SW)) {
-      scenes[selectedScene] = { editHour, editMinute, editReverse };
+    if (btnPressed(ENC_SW))
+    {
+      scenes[selectedScene] = {editHour, editMinute, editReverse};
       mode = RUN;
     }
   }
 
   // ===== UART受信 =====
-  if (mySerial.available()) {
+  if (mySerial.available())
+  {
 
     String s = mySerial.readStringUntil('\n');
     s.trim();
@@ -271,12 +369,21 @@ void loop() {
     Serial.print("RS485 RX: ");
     Serial.println(s);
 
-    if (s == "ACK,START") {
+    if (s == "ACK,START")
+    {
       receiverStatus = RECEIVER_JUMP;
+
       Serial.println("Receiver Status = JUMP");
-    } else if (s == "ACK,DONE") {
+      Serial.println(" / Scene = S");
+      Serial.println(activeScene + 1);
+    }
+
+    else if (s == "ACK,DONE")
+    {
+
       receiverStatus = RECEIVER_RUN;
       Serial.println("Receiver Status = RUN");
+      activeScene = -1;
     }
   }
 
