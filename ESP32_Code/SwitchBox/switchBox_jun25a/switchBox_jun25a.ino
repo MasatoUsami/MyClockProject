@@ -83,9 +83,13 @@ struct Scene
 
 Scene scenes[4];
 
-// ===== 実行中Scene =====
-int activeScene = -1;
-int readyScene = -1;
+// ===== Scene状態 =====
+int activeScene = -1; // 現在JUMP中
+int readyScene = -1;  // JUMP確認中
+int nextScene = -1;   // 次に実行するScene
+
+bool nextSceneReady = false;     // NEXT候補あり
+bool nextSceneConfirmed = false; // NEXT確定
 
 // ===== 状態 =====
 int selectedScene = 0;
@@ -178,6 +182,21 @@ void drawUI()
       else
       {
         display.print("->");
+      }
+
+      if (nextSceneReady)
+      {
+        display.setTextSize(1);
+        display.setCursor(70, 54);
+
+        if (nextSceneConfirmed)
+        {
+          display.printf("NEXT S%d OK", nextScene + 1);
+        }
+        else
+        {
+          display.printf("NEXT S%d", nextScene + 1);
+        }
       }
     }
 
@@ -338,11 +357,52 @@ void loop()
       selectedScene = 0;
     }
 
-    // Sceneボタン → JUMP確認
+    // Sceneボタン
     else if (pressedScene != -1)
     {
-      readyScene = pressedScene;
-      mode = READY_JUMP;
+      // ===== JUMP中 =====
+      if (receiverStatus == RECEIVER_JUMP)
+      {
+        // ===== NEXT候補がまだない =====
+        if (!nextSceneReady)
+        {
+          nextScene = pressedScene;
+          nextSceneReady = true;
+          nextSceneConfirmed = false;
+
+          Serial.print("NEXT CANDIDATE = S");
+          Serial.println(nextScene + 1);
+        }
+
+        // ===== NEXT候補がある =====
+        else
+        {
+          // 同じSceneをもう一度押した
+          if (pressedScene == nextScene)
+          {
+            nextSceneConfirmed = true;
+
+            Serial.print("NEXT CONFIRMED = S");
+            Serial.println(nextScene + 1);
+          }
+
+          // 別のSceneを押した
+          else
+          {
+            nextScene = pressedScene;
+            nextSceneConfirmed = false;
+
+            Serial.print("NEXT CANDIDATE CHANGED = S");
+            Serial.println(nextScene + 1);
+          }
+        }
+      }
+      // ===== 通常RUN =====
+      else
+      {
+        readyScene = pressedScene;
+        mode = READY_JUMP;
+      }
     }
   }
 
@@ -457,10 +517,41 @@ void loop()
 
     else if (s == "ACK,DONE")
     {
+      Serial.println("Receiver JUMP DONE");
 
-      receiverStatus = RECEIVER_RUN;
-      Serial.println("Receiver Status = RUN");
-      activeScene = -1;
+      // ===== NEXTが確定している場合 =====
+      if (nextSceneReady && nextSceneConfirmed)
+      {
+        activeScene = nextScene;
+
+        Serial.print("AUTO NEXT JUMP -> S");
+        Serial.println(activeScene + 1);
+
+        sendScene(activeScene);
+
+        // NEXTを消費
+        nextScene = -1;
+        nextSceneReady = false;
+        nextSceneConfirmed = false;
+
+        // Receiverはすぐ次のJUMPへ
+        receiverStatus = RECEIVER_JUMP;
+      }
+
+      // ===== NEXTがない場合 =====
+      else
+      {
+        receiverStatus = RECEIVER_RUN;
+
+        Serial.println("Receiver Status = RUN");
+
+        activeScene = -1;
+
+        // NEXT候補があっても未確定なら破棄
+        nextScene = -1;
+        nextSceneReady = false;
+        nextSceneConfirmed = false;
+      }
     }
   }
 
