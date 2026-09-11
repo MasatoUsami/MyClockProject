@@ -56,7 +56,8 @@ enum Mode
   SELECT_SCENE,
   EDIT_HOUR,
   EDIT_MINUTE,
-  EDIT_DIR
+  EDIT_DIR,
+  READY_JUMP,
 };
 
 Mode mode = RUN;
@@ -84,6 +85,7 @@ Scene scenes[4];
 
 // ===== 実行中Scene =====
 int activeScene = -1;
+int readyScene = -1;
 
 // ===== 状態 =====
 int selectedScene = 0;
@@ -202,13 +204,42 @@ void drawUI()
     }
   }
 
+  // READY_JUMPモード
+
+  else if (mode == READY_JUMP)
+  {
+    display.setTextSize(2);
+
+    display.setCursor(0, 0);
+    display.printf("READY S%d", readyScene + 1);
+
+    display.setTextSize(3);
+
+    display.setCursor(20, 20);
+    display.printf("%02d:%02d",
+                   scenes[readyScene].hour,
+                   scenes[readyScene].minute);
+
+    display.setTextSize(2);
+
+    display.setCursor(50, 48);
+
+    if (scenes[readyScene].reverse)
+    {
+      display.print("<-");
+    }
+    else
+    {
+      display.print("->");
+    }
+  }
+
   // ==================================================
   // シーン設定モード
   // ==================================================
 
   else
   {
-
     display.setTextSize(1);
 
     display.setCursor(0, 0);
@@ -226,6 +257,15 @@ void drawUI()
   }
 
   display.display();
+}
+
+// ==================================================
+// SELECT_SCENEモードでのシーン選択
+// ==================================================
+void selectSceneForJump(int i)
+{
+  readyScene = i;
+  mode = READY_JUMP;
 }
 
 // ===== セットアップ =====
@@ -265,36 +305,73 @@ void loop()
 
   int enc = readEncoder();
 
-  // ===== MODE =====
-  if (btnPressed(BTN_MODE))
+  // ===== Scene button を1回だけ読む =====
+  int pressedScene = -1;
+
+  if (btnPressed(BTN_S1))
   {
-    mode = SELECT_SCENE;
-    selectedScene = 0;
+    pressedScene = 0;
   }
+  else if (btnPressed(BTN_S2))
+  {
+    pressedScene = 1;
+  }
+  else if (btnPressed(BTN_S3))
+  {
+    pressedScene = 2;
+  }
+  else if (btnPressed(BTN_S4))
+  {
+    pressedScene = 3;
+  }
+
+  // ===== MODE button を1回だけ読む =====
+  bool pressedMode = btnPressed(BTN_MODE);
 
   // ===== RUNモード =====
   if (mode == RUN)
   {
+    // MODE → シーン設定
+    if (pressedMode)
+    {
+      mode = SELECT_SCENE;
+      selectedScene = 0;
+    }
 
-    if (btnPressed(BTN_S1))
+    // Sceneボタン → JUMP確認
+    else if (pressedScene != -1)
     {
-      activeScene = 0;
-      sendScene(0);
+      readyScene = pressedScene;
+      mode = READY_JUMP;
     }
-    if (btnPressed(BTN_S2))
+  }
+
+  // ===== JUMP確認 =====
+  else if (mode == READY_JUMP)
+  {
+    // MODE → Cancel
+    if (pressedMode)
     {
-      activeScene = 1;
-      sendScene(1);
+      readyScene = -1;
+      mode = RUN;
     }
-    if (btnPressed(BTN_S3))
+
+    // Sceneボタン
+    else if (pressedScene != -1)
     {
-      activeScene = 2;
-      sendScene(2);
-    }
-    if (btnPressed(BTN_S4))
-    {
-      activeScene = 3;
-      sendScene(3);
+      // 同じSceneをもう一度押した → JUMP実行
+      if (pressedScene == readyScene)
+      {
+        activeScene = readyScene;
+        sendScene(readyScene);
+        mode = RUN;
+      }
+
+      // 別のScene → 確認対象を変更
+      else
+      {
+        readyScene = pressedScene;
+      }
     }
   }
 
